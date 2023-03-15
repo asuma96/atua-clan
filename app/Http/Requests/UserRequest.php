@@ -22,26 +22,15 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'domain_id' => 'required|integer',
-            'name' => 'required|string',
-            'slug' => 'required|alpha_dash',
-            'image' => 'file|nullable',
-            'description' => 'string|nullable',
-            'user_id' => 'integer|nullable',
-            'h1' => 'string|nullable',
-            'title' => 'string|nullable',
-            'meta_description' => 'string|nullable',
-            'is_show' => 'boolean',
-            'parent_id' => 'nullable|integer|exists:App\Models\Tag,id',
+            'name' => 'required|string|min:3|max:100',
+            'percent' => 'nullable|'
         ];
     }
 
     public function messages()
     {
         return [
-            'domain_id.required' => 'Поле обязательно для заполнения',
             'name.required' => 'Поле обязательно для заполнения',
-            'slug.required' => 'Поле обязательно для заполнения',
         ];
     }
 }

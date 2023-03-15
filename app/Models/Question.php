@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -13,6 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property int $id
  * @property string|null $file
  * @property string $text
+ * @property-read \Illuminate\Database\Eloquent\Collection|Answer[] $answers
  */
 
 class Question extends Model
@@ -27,4 +29,12 @@ class Question extends Model
         'file',
         'text',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function answers(): HasMany
+    {
+        return $this->hasMany(Answer::class, 'question_id', 'id');
+    }
 }

@@ -19,5 +19,7 @@ mix.copy('resources/makeup/js/ads.js', './public/js/ads.js');
 
 mix
   .copyDirectory('resources/makeup/img', './public/img')
+  mix
+    .copyDirectory('resources/makeup/videos', './public/videos')
 
 mix.version();

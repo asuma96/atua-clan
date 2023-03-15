@@ -490,7 +490,8 @@ img, video {
 }
 
 .bg-center {
-    background-position: center
+    background-position: center;
+    background-color: #1c1717;
 }
 
 .stroke-red-500 {
@@ -764,4 +765,42 @@ img, video {
 }
 .quiz-content {
     padding: 60px;
+}
+.quiz-container {
+    max-width: 40rem;
+}
+.user-input {
+    margin-top: 20px;
+    background-color: #2d2d2d;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 16px;
+    height: 38px;
+    padding: 10px;
+    width: 100%;
+}
+.register-btn {
+    margin-top: 20px;
+    background-color: #f2ca8c;         /* цвет фона кнопки */
+    color: #333333;                    /* цвет текста на кнопке */
+    border: none;                      /* убираем границы */
+    border-radius: 5px;                /* скругляем углы */
+    padding: 10px 20px;                /* отступы внутри кнопки */
+    font-size: 16px;                   /* размер текста на кнопке */
+    font-weight: bold;                 /* жирный текст */
+    text-transform: uppercase;         /* преобразование текста в верхний регистр */
+    letter-spacing: 2px;               /* расстояние между буквами */
+    transition: background-color 0.3s ease; /* плавный переход цвета фона при наведении мыши */
+}
+
+.register-btn:hover {
+    background-color: #e8ad4a;         /* цвет фона кнопки при наведении мыши */
+    cursor: pointer;                   /* изменяем вид курсора при наведении на кнопку */
+}
+.user-block-text {
+    display: grid;
+}
+.home-atua-logo {
+    max-width: 70%;
 }

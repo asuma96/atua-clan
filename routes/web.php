@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    return view('pages.user');
+});
+Route::get('/quiz', function () {
     return view('pages.quiz');
 });
+Route::post('user', [\App\Http\Controllers\UserController::class, 'create'])->name('create');
