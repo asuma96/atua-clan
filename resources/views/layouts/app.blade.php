@@ -36,7 +36,7 @@
     <div class="container">
         @yield('content')
     </div>
-</main>1
+</main>11
 @section('scripts')
     <script src="{{mix('js/all.js')}}" type="application/javascript"></script>
     <script src="{{mix('js/ads.js')}}" type="application/javascript"></script>
