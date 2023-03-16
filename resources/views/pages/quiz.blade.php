@@ -12,18 +12,19 @@
                         class="scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
                         <div>
                             <div>
-                                <video width="360" height="240" controls controlsList="nodownload">
+                                <video width="360" height="240" controls controlsList="nodownload" muted autoplay loop>
                                     <source src="/videos/AKIMATO80sn90ssnip.mp4" type="video/mp4">
                                         Your browser does not support the video tag.
                                 </video>
                             </div>
                             <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white quiz-text">Documentation</h2>
                             <h1></h1>
-                            <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                Laravel has wonderful documentation covering every aspect of the framework. Whether you
-                                are a newcomer or have prior experience with Laravel, we recommend reading our
-                                documentation from beginning to end.
-                            </p>
+                            <ul class="quiz-ul">
+                                <li>Овет 1</li>
+                                <li>Овет 2</li>
+                                <li>Овет 3</li>
+                                <li>Овет 4</li>
+                            </ul>
                         </div>
                     </span>
                 </div>
