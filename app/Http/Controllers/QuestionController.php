@@ -4,84 +4,71 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\QuestionGetPercentRequest;
 use App\Http\Requests\QuestionRequest;
 use App\Models\Question;
+use App\Models\User;
 use App\Transformers\Question\QuestionTransformer;
+use App\Transformers\Serializer\ArraySerializer;
+use App\Transformers\User\UserTransformer;
 use Exception;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use JsonException;
 use League\Fractal;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
+use League\Fractal\Serializer\DataArraySerializer;
 use Throwable;
 
 class QuestionController extends \App\Http\Controllers\Controller
 {
-    /** @var \League\Fractal\Manager */
-    protected Fractal\Manager $fractalManager;
 
     /**
      * @return mixed
      */
     public function index()
     {
-        $questions = Question::query()->with('answers')->inRandomOrder()->limit(10)->get();
-        $preparedQuestions = $this->prepareQuestionToResponse($questions);
-        return $this->response($preparedQuestions);
+        $questions = Question::query()->with('answers')->inRandomOrder()->limit(10)->paginate(10);
+        $resource = $this->prepareQuestionToResponse($questions);
+
+        return response($resource->toArray());
     }
 
-    /**
-     * @param  QuestionRequest  $request
-     * @return JsonResponse|object
-     *
-     * @throws JsonException|Throwable
-     */
-    public function create(QuestionRequest $request)
-    {
-        // Create new model
-        $question = new Question();
-
-        // Prepare model from request and save data.
-        $isCreated = $this->prepareQuestionAnswerAndSave($question, $request);
-
-        // If model not created, send error response to client.
-        if (! $isCreated) {
-            return $this->error('Во время создания что-то пошло не так, попробуйте еще раз.');
-        }
-
-        // Prepare model to response.
-        $preparedUser = $this->prepareQuestionToResponse($question);
-
-        return $this->response($preparedUser);
-    }
-
-    //@Todo create percent for answers...and check answers.
-    protected function prepareQuestionAnswerAndSave(){
-
-    }
     /**
      * @param $question
-     * @return array|null
+     * @return Fractal\Scope
      */
-    protected function prepareQuestionToResponse($question): ?array
+    protected function prepareQuestionToResponse($question): Fractal\Scope
     {
         // Transform model data.
-        return $this->fractalManager->createData(
-            (new Fractal\Resource\Item($question, new QuestionTransformer))
-        )->toArray();
+        $result = new Fractal\Resource\Collection($question->getCollection(), new QuestionTransformer());
+        $result->setPaginator(new IlluminatePaginatorAdapter($question));
+        $this->fractalManager->setSerializer(new DataArraySerializer());
+
+        return $this->fractalManager->createData($result);
     }
 
     /**
-     * @param $id
-     * @return JsonResponse|object
+     * @param $userId
+     * @param QuestionGetPercentRequest $request
+     * @return array|null
      */
-    public function show($id)
+    public function getPercent($userId, QuestionGetPercentRequest $request)
     {
-        $question = Question::query()->where('id', $id)->firstOrFail();
+        $answers = $request->get('answers');
 
-        // Prepare model to response.
-        $questionPrepared = $this->preparePostToResponse($question);
+        $i = 0;
+        foreach ($answers as $answer) {
+            $i += (bool)$answer === true ? 1 : 0;
+        }
+        $percent = $i / 10 * 100;
 
-        return $this->response($questionPrepared);
+        $user = User::query()->findOrFail($userId);
+        $user->percent = $percent;
+        $user->qr = true;
+        $user->save();
+
+        return $this->fractalManager->createData(
+            (new Fractal\Resource\Item($user, new UserTransformer()))
+        )->toArray();
     }
 }

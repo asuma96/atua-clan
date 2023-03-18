@@ -20,7 +20,7 @@
                             <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white quiz-text">Documentation</h2>
                             <h1></h1>
                             <ul class="quiz-ul">
-                                <li>Овет 1</li>
+                                {{--<li>{{$user->name}}</li>--}}
                                 <li>Овет 2</li>
                                 <li>Овет 3</li>
                                 <li>Овет 4</li>

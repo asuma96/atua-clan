@@ -19,4 +19,9 @@ Route::get('/', function () {
 Route::get('/quiz', function () {
     return view('pages.quiz');
 });
-Route::post('user', [\App\Http\Controllers\UserController::class, 'create'])->name('create');
+Route::post('question/getPercent/{user_id}', [\App\Http\Controllers\QuestionController::class, 'getPercent'])->name('getPercent');
+
+Route::post('user', [\App\Http\Controllers\UserController::class, 'create']);
+Route::get('user/{id}', [\App\Http\Controllers\UserController::class, 'show']);
+Route::post('question', [\App\Http\Controllers\QuestionController::class, 'create']);
+Route::get('question', [\App\Http\Controllers\QuestionController::class, 'index']);

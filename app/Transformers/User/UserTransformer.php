@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Transformers\User;
 
 use App\Models;
-use League\Fractal\TransformerAbstract;
 
-class UserTransformer extends TransformerAbstract
+class UserTransformer extends \League\Fractal\TransformerAbstract
 {
     /**
      * @param  Models\User  $user
