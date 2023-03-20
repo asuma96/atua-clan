@@ -30,6 +30,16 @@
     @show
     @section('header')
     @show
+    <script>
+$(function() {
+    $.ajaxSetup({
+        headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+});
+
+    </script>
 </head>
 <body>
 <main id="main">

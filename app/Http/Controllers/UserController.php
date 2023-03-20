@@ -12,7 +12,6 @@ use League\Fractal;
 class UserController extends \App\Http\Controllers\Controller
 {
     /** @var \League\Fractal\Manager */
-    protected Fractal\Manager $fractalManager;
 
     /**
      * @param UserRequest $request
@@ -20,13 +19,11 @@ class UserController extends \App\Http\Controllers\Controller
      */
     public function create(UserRequest $request)
     {
+
         // Create new model
         $user = new User();
-        $user->create(['name', $request->get('name')]);
+        $user->name = $request->get('name');
         $user->save();
-        $user =  $this->fractalManager->createData(
-            (new Fractal\Resource\Item($user, new UserTransformer()))
-        )->toArray();
         return view('pages.quiz', [
             'user' => $user
         ]);
