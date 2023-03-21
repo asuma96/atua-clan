@@ -17,8 +17,11 @@
                                 are a newcomer or have prior experience with Laravel, we recommend reading our
                                 documentation from beginning to end.
                             </p>
-                            <input type="text" alt="Введите своё имя" class="user-input" placeholder="Введи имя">
+                            <form action="user" method="post">
+    {{ csrf_field() }}
+                            <input type="text" id="name" name="name" alt="Введите своё имя" class="user-input" placeholder="Введи имя" required>
                             <button class="register-btn"> Пройти тест!</button>
+                            </form>
                         </div>
                     </span>
                 </div>

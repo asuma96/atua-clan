@@ -30,7 +30,7 @@
     @show
     @section('header')
     @show
-    <script>
+   {{-- <script>
 $(function() {
     $.ajaxSetup({
         headers: {
@@ -39,7 +39,7 @@ $(function() {
     });
 });
 
-    </script>
+    </script>--}}
 </head>
 <body>
 <main id="main">
@@ -48,6 +48,10 @@ $(function() {
     </div>
 </main>
 @section('scripts')
+    <script
+        src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+        crossorigin="anonymous"></script>
     <script src="{{mix('js/all.js')}}" type="application/javascript"></script>
     <script src="{{mix('js/ads.js')}}" type="application/javascript"></script>
 @show
