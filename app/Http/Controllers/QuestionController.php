@@ -27,17 +27,23 @@ class QuestionController extends \App\Http\Controllers\Controller
      */
     public function index()
     {
+
         $questions = Question::query()->with('answers')->inRandomOrder()->limit(10)->paginate(10);
         $resource = $this->prepareQuestionToResponse($questions);
-
-        return response($resource->toArray());
+        return view('pages.quiz', [
+            'questions' => $resource->toJson(),
+            'user' => [
+                'name' => session()->get('user')['name'],
+                'id' => session()->get('user')['id']
+            ]
+        ]);
     }
 
     /**
      * @param $question
      * @return Fractal\Scope
      */
-    protected function prepareQuestionToResponse($question): Fractal\Scope
+    protected function  prepareQuestionToResponse($question): Fractal\Scope
     {
         // Transform model data.
         $result = new Fractal\Resource\Collection($question->getCollection(), new QuestionTransformer());

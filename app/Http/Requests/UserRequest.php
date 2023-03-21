@@ -23,7 +23,7 @@ class UserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:3|max:100',
-            'percent' => 'nullable|'
+            'percent' => 'nullable'
         ];
     }
 

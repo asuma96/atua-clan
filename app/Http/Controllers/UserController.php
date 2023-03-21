@@ -19,14 +19,12 @@ class UserController extends \App\Http\Controllers\Controller
      */
     public function create(UserRequest $request)
     {
-
         // Create new model
         $user = new User();
         $user->name = $request->get('name');
         $user->save();
-        return view('pages.quiz', [
-            'user' => $user
-        ]);
+
+        return redirect('question')->with('user', $user);
     }
 
     /**
