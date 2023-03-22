@@ -15,16 +15,45 @@ class QuestionSeeder extends Seeder
     {
         $questions = [
             [
-                'file' => 'AKIMATO80sn90ssnip.mp4',
-                'text' => 'test',
+                'file' => 'hatin360h.mp4',
+                'text' => 'Akimato hatin',
             ],
             [
-                'file' => 'CJWHOOPTYmobclip.net',
-                'text' => 'TTM',
+                'file' => 'mirrortalk1.mp4',
+                'text' => 'Mirror talk',
             ],
             [
-                'file' => 'YelawolfxCaskeyBeenAProblemmobclip.net',
-                'text' => 'TTM',
+                'file' => 'nevagohard.mp4',
+                'text' => 'I neva go hard',
+            ],
+
+            [
+                'file' => 'oolong.mp4',
+                'text' => 'O loong',
+            ],
+            [
+                'file' => 'poke.mp4',
+                'text' => 'Poke',
+            ],
+            [
+                'file' => 'rookie.mp4',
+                'text' => 'rookie',
+            ],
+            [
+                'file' => 'senju360.mp4',
+                'text' => 'senju',
+            ],
+            [
+                'file' => 'thundawind.mp4',
+                'text' => 'Thundavind',
+            ],
+            [
+                'file' => 'twox.mp4',
+                'text' => 'twox',
+            ],
+            [
+                'file' => 'uncledecoy',
+                'text' => 'UNCLE DECOY',
             ]
         ];
 

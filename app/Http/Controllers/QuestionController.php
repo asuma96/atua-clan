@@ -33,8 +33,8 @@ class QuestionController extends \App\Http\Controllers\Controller
         return view('pages.quiz', [
             'questions' => $resource->toJson(),
             'user' => [
-                'name' => session()->get('user')['name'],
-                'id' => session()->get('user')['id']
+                'name' => session()->get('user')['name'] ?? User::query()->orderBy('created_at','desc')->first()['name'],
+                'id' => session()->get('user')['id'] ?? User::query()->orderBy('created_at','desc')->first()['id']
             ]
         ]);
     }
