@@ -19,218 +19,236 @@
     </div>
     <script>
 
-class Quiz {
-    constructor(questions) {
-        this.items = questions.data;
-        this.interval = 0;
-        this.timer = 0;
-        this.answers = [];
-    }
-
-    createQuestions() {
-        const that = this;
-        this.items.forEach(function (item, index) {
-            document.querySelector('.quiz-list').appendChild(that.createQuestion(item))
-        });
-        document.querySelectorAll('.quiz-question').forEach(function (item, index) {
-            item.style.display = 'none';
-        });
-        this.nextQuestion();
-    }
-
-    createQuestion(item) {
-        const question = document.createElement('div');
-        question.classList.add('quiz-question');
-        question.setAttribute('data-id', item.id)
-        const video = this.createVideo(item.file);
-        const timer = this.createTimer();
-        const answerList = this.createAnswerList(item.answers);
-        question.appendChild(video);
-        {{--volume.addEventListener('click', function () {
-            video.muted = !video.muted;
-            console.log(video.muted);
-        });--}}
-        volume.click();
-        question.appendChild(timer);
-        question.appendChild(answerList);
-        return question;
-    }
-
-    resetTimer(id) {
-        const that = this;
-        let timerCount = 0;
-        const timerLine = document.querySelector(`.quiz-question[data-id="${id}"] .quiz-timer-line`);
-        const timerTime = document.querySelector(`.quiz-question[data-id="${id}"] .quiz-timer-time`);
-        let timeLeft = 20;
-        let timeLeftString = '20';
-        this.interval = setInterval(function () {
-            timerCount += 5 * .05;
-            timeLeft -= .05;
-            if (timeLeft <= 0) {
-                timeLeft = 0;
+        class Quiz {
+            constructor(questions) {
+                this.items = questions.data;
+                this.interval = 0;
+                this.timer = 0;
+                this.answers = [];
+                this.tick = '<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 26 26" width="20px" height="20px"><path d="M 22.566406 4.730469 L 20.773438 3.511719 C 20.277344 3.175781 19.597656 3.304688 19.265625 3.796875 L 10.476563 16.757813 L 6.4375 12.71875 C 6.015625 12.296875 5.328125 12.296875 4.90625 12.71875 L 3.371094 14.253906 C 2.949219 14.675781 2.949219 15.363281 3.371094 15.789063 L 9.582031 22 C 9.929688 22.347656 10.476563 22.613281 10.96875 22.613281 C 11.460938 22.613281 11.957031 22.304688 12.277344 21.839844 L 22.855469 6.234375 C 23.191406 5.742188 23.0625 5.066406 22.566406 4.730469 Z" fill="#039d52"/></svg>';
+                this.cross = '<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 26 26" width="20px" height="20px"><path d="M 21.734375 19.640625 L 19.636719 21.734375 C 19.253906 22.121094 18.628906 22.121094 18.242188 21.734375 L 13 16.496094 L 7.761719 21.734375 C 7.375 22.121094 6.746094 22.121094 6.363281 21.734375 L 4.265625 19.640625 C 3.878906 19.253906 3.878906 18.628906 4.265625 18.242188 L 9.503906 13 L 4.265625 7.761719 C 3.882813 7.371094 3.882813 6.742188 4.265625 6.363281 L 6.363281 4.265625 C 6.746094 3.878906 7.375 3.878906 7.761719 4.265625 L 13 9.507813 L 18.242188 4.265625 C 18.628906 3.878906 19.257813 3.878906 19.636719 4.265625 L 21.734375 6.359375 C 22.121094 6.746094 22.121094 7.375 21.738281 7.761719 L 16.496094 13 L 21.734375 18.242188 C 22.121094 18.628906 22.121094 19.253906 21.734375 19.640625 Z" fill="#b61031"/></svg>';
             }
-            timeLeftString = String(Math.floor(timeLeft));
-            if (timerCount >= 100 || document.querySelector(`.quiz-question[data-id="${id}"]`).style.display != 'block') {
-                clearInterval(that.interval);
-                that.answers.push({id: id, correct: false});
-                for (let i in that.items) {
-                    if (that.items[i].id == id) {
-                        for (let j in that.items[i].answers) {
-                            if (that.items[i].answers[j].right_answer) {
-                                document.querySelector(`.quiz-ul li[data-question-id="${id}"][data-id="${that.items[i].answers[j].id}"]`).classList.add('correct', 'checked');
+
+            createQuestions() {
+                const that = this;
+                this.items.forEach(function (item, index) {
+                    document.querySelector('.quiz-list').appendChild(that.createQuestion(item))
+                });
+                document.querySelectorAll('.quiz-question').forEach(function (item, index) {
+                    item.style.display = 'none';
+                });
+                this.nextQuestion();
+            }
+
+            createQuestion(item) {
+                const question = document.createElement('div');
+                question.classList.add('quiz-question');
+                question.setAttribute('data-id', item.id)
+                const video = this.createVideo(item.file);
+                const timer = this.createTimer();
+                const answerList = this.createAnswerList(item.answers);
+                question.appendChild(video);
+                {{--volume.addEventListener('click', function () {
+                    video.muted = !video.muted;
+                    console.log(video.muted);
+                });--}}
+                volume.click();
+                question.appendChild(timer);
+                question.appendChild(answerList);
+                return question;
+            }
+
+            resetTimer(id) {
+                const that = this;
+                let timerCount = 0;
+                const timerLine = document.querySelector(`.quiz-question[data-id="${id}"] .quiz-timer-line`);
+                const timerTime = document.querySelector(`.quiz-question[data-id="${id}"] .quiz-timer-time`);
+                let timeLeft = 20;
+                let timeLeftString = '20';
+                this.interval = setInterval(function () {
+                    timerCount += 5 * .05;
+                    timeLeft -= .05;
+                    if (timeLeft <= 0) {
+                        timeLeft = 0;
+                    }
+                    timeLeftString = String(Math.floor(timeLeft));
+                    if (timerCount >= 100 || document.querySelector(`.quiz-question[data-id="${id}"]`).style.display != 'block') {
+                        clearInterval(that.interval);
+                        that.answers.push({id: id, correct: false});
+                        for (let i in that.items) {
+                            if (that.items[i].id == id) {
+                                for (let j in that.items[i].answers) {
+                                    if (that.items[i].answers[j].right_answer) {
+                                        document.querySelector(`.quiz-ul li[data-question-id="${id}"][data-id="${that.items[i].answers[j].id}"]`).classList.add('correct', 'checked');
+                                        const tick = document.createElement('span');
+                                        tick.innerHTML = that.tick;
+                                        document.querySelector(`.quiz-ul li[data-question-id="${id}"][data-id="${that.items[i].answers[j].id}"]`).appendChild(tick);
+                                    }
+                                }
                             }
                         }
+                        setTimeout(function () {
+                            that.nextQuestion();
+                        }, 3000);
                     }
-                }
-                setTimeout(function () {
-                    that.nextQuestion();
-                }, 2000);
+                    timerLine.style.width = timerCount + '%';
+                    timerTime.textContent = '0:' + (timeLeftString.length > 1 ? timeLeftString: '0' + timeLeftString);
+                }, 50);
             }
-            timerLine.style.width = timerCount + '%';
-            timerTime.textContent = '0:' + (timeLeftString.length > 1 ? timeLeftString: '0' + timeLeftString);
-        }, 50);
-    }
 
-    createTimer() {
-        const timer = document.createElement('div');
-        timer.classList.add('quiz-timer-wrapper');
-        const timerLineWrapper = document.createElement('div');
-        timerLineWrapper.classList.add('quiz-timer-line-wrapper');
-        const timerLine = document.createElement('div');
-        timerLine.classList.add('quiz-timer-line');
-        timerLineWrapper.appendChild(timerLine);
-        const timerTime = document.createElement('div');
-        timerTime.classList.add('quiz-timer-time');
-        timerTime.textContent = '0:20';
-        timer.appendChild(timerLineWrapper);
-        timer.appendChild(timerTime);
-        return timer;
-    }
+            createTimer() {
+                const timer = document.createElement('div');
+                timer.classList.add('quiz-timer-wrapper');
+                const timerLineWrapper = document.createElement('div');
+                timerLineWrapper.classList.add('quiz-timer-line-wrapper');
+                const timerLine = document.createElement('div');
+                timerLine.classList.add('quiz-timer-line');
+                timerLineWrapper.appendChild(timerLine);
+                const timerTime = document.createElement('div');
+                timerTime.classList.add('quiz-timer-time');
+                timerTime.textContent = '0:20';
+                timer.appendChild(timerLineWrapper);
+                timer.appendChild(timerTime);
+                return timer;
+            }
 
-    createVideo(video) {
-        const videoItem = document.createElement('video');
-        videoItem.classList.add('quiz-video');
-        if (video.lastIndexOf('.mp4') == video.length - 4) {
-            videoItem.src = './videos/'+video;
-        } else {
-            videoItem.src = './videos/'+video+'.mp4';
-        }
-        videoItem.controls = true;
-        videoItem.controlsList = "nodownload";
-        videoItem.muted = true;
-        videoItem.autoplay = true;
-        videoItem.loop = true;
-        return videoItem;
-    }
-
-    createAnswerList(items) {
-        const that = this;
-        let answers = [];
-        for (let i in items) {
-            answers.push(items[i]);
-        }
-        const answerList = document.createElement('ul');
-        answerList.classList.add('quiz-ul');
-        answers.forEach(function (item, index) {
-            answerList.appendChild(that.createAnswer(item));
-        });
-        return answerList;
-    }
-
-    createAnswer(item) {
-        const answer = document.createElement('li');
-        answer.setAttribute('data-id', item.id);
-        answer.setAttribute('data-question-id', item.question_id);
-        answer.textContent = item.answer;
-        return answer;
-    }
-
-    checkAnswer(questionId, answerId) {
-        const that = this;
-        let correct = false;
-        let correctAnswer = 0;
-        this.items.forEach(function (item, index) {
-            if (item.id == questionId) {
-                let answers = [];
-                for (let i in item.answers) {
-                    answers.push(item.answers[i]);
+            createVideo(video) {
+                const videoItem = document.createElement('video');
+                videoItem.classList.add('quiz-video');
+                if (video.lastIndexOf('.mp4') == video.length - 4) {
+                    videoItem.src = './videos/'+video;
+                } else {
+                    videoItem.src = './videos/'+video+'.mp4';
                 }
-                answers.forEach(function (answer, id) {
-                    if (answer.id == answerId && answer.right_answer) {
-                        correct = true;
-                    } else if (answer.right_answer) {
-                        correctAnswer = answer.id;
+                videoItem.controls = true;
+                videoItem.controlsList = "nodownload";
+                videoItem.muted = true;
+                videoItem.autoplay = true;
+                videoItem.loop = true;
+                return videoItem;
+            }
+
+            createAnswerList(items) {
+                const that = this;
+                let answers = [];
+                for (let i in items) {
+                    answers.push(items[i]);
+                }
+                const answerList = document.createElement('ul');
+                answerList.classList.add('quiz-ul');
+                answers.forEach(function (item, index) {
+                    answerList.appendChild(that.createAnswer(item));
+                });
+                return answerList;
+            }
+
+            createAnswer(item) {
+                const answer = document.createElement('li');
+                answer.setAttribute('data-id', item.id);
+                answer.setAttribute('data-question-id', item.question_id);
+                answer.textContent = item.answer;
+                return answer;
+            }
+
+            checkAnswer(questionId, answerId) {
+                const that = this;
+                let correct = false;
+                let correctAnswer = 0;
+                this.items.forEach(function (item, index) {
+                    if (item.id == questionId) {
+                        let answers = [];
+                        for (let i in item.answers) {
+                            answers.push(item.answers[i]);
+                        }
+                        answers.forEach(function (answer, id) {
+                            if (answer.id == answerId && answer.right_answer) {
+                                correct = true;
+                            } else if (answer.right_answer) {
+                                correctAnswer = answer.id;
+                            }
+                        });
+                        that.answers.push(correct);
+                        if (!document.querySelectorAll(`.quiz-ul li[data-question-id="${questionId}"].checked`).length) {
+                            if (correct) {
+                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).classList.add('correct', 'checked');
+                                const tick = document.createElement('span');
+                                tick.innerHTML = that.tick;
+                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).appendChild(tick);
+                            } else {
+                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).classList.add('wrong', 'checked');
+                                const cross = document.createElement('span');
+                                cross.innerHTML = that.cross;
+                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).appendChild(cross);
+                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${correctAnswer}"]`).classList.add('correct', 'checked');
+
+                                const tick = document.createElement('span');
+                                tick.innerHTML = that.tick;
+                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${correctAnswer}"]`).appendChild(tick);
+                            }
+                        }
+                        clearInterval(that.interval);
+                        setTimeout(function () {
+                            that.nextQuestion();
+                        }, 3000);
                     }
                 });
-                that.answers.push(correct);
-                if (!document.querySelectorAll(`.quiz-ul li[data-question-id="${questionId}"].checked`).length) {
-                    if (correct) {
-                        document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).classList.add('correct', 'checked');
+            }
+
+            showResult() {
+                const result = document.createElement('div');
+                result.classList.add('quiz-result');
+                result.innerText = `Вы ответили правильно на ${this.answers.filter(function (item) {return item}).length}/${this.items.length} вопросов`;
+                document.querySelector('.quiz-list').appendChild(result);
+                console.log(this.answers);
+                $.post("/question/getPercent/23", {
+                    "answers": that.answers,
+                    "brand_id": $('.campaign-star-rating').attr('data-id')
+                }, function (response) {
+                    // TODO правильная ссылка запроса + response
+                    if (response.status === "success") {
+                        name.val('');
+                        comment.val('');
+                        modalInformation("<div class='with-title'><i class='icon-Success'></i><h4>Спасибо за отзыв!</h4><p>После проверки модераторами, он будет добавлен на сайт.</p></div>", 6000);
+                        _t.addClass('disabled');
                     } else {
-                        document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).classList.add('wrong', 'checked');
-                        document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${correctAnswer}"]`).classList.add('correct', 'checked');
+                        modalInformation("<i class='icon-Fail'></i>Ошибка. Попробуйте позже.", 3000);
+                    }
+                });
+            }
+
+            nextQuestion() {
+                const that = this;
+                const questionId = this.items[this.answers.length]?.id;
+                if (!questionId) { // если этот вопрос не существует, то скрываем все и показываем результат
+                    document.querySelectorAll('.quiz-question').forEach(function (item, index) {
+                        item.style.display = 'none';
+                    });
+                    this.showResult();
+                    clearInterval(this.interval);
+                    return;
+                }
+                document.querySelectorAll('.quiz-video').forEach(function (item, index) {
+                    item.muted = true;
+                });
+                if (!this.answers.length) {
+                    document.querySelectorAll('.quiz-question').forEach(function (item, index) {
+                        item.style.display = 'none';
+                    });
+                    if (document.querySelector(`.quiz-question[data-id="${questionId}"]`) !== null) {
+                        document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
+                        that.resetTimer(questionId);
+                    }
+                } else {
+                    document.querySelectorAll('.quiz-question').forEach(function (item, index) {
+                        item.style.display = 'none';
+                    });
+                    if (document.querySelector(`.quiz-question[data-id="${questionId}"]`) !== null) {
+                        document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
+                        that.resetTimer(questionId);
                     }
                 }
-                clearInterval(that.interval);
-                setTimeout(function () {
-                    that.nextQuestion();
-                }, 2000);
-            }
-        });
-    }
-
-    showResult() {
-        const result = document.createElement('div');
-        result.classList.add('quiz-result');
-        result.innerText = `Вы ответили правильно на ${this.answers.filter(function (item) {return item}).length}/${this.items.length} вопросов`;
-        document.querySelector('.quiz-list').appendChild(result);
-        console.log(this.answers);
-         $.post("/question/getPercent/23", {
-      "answers": that.answers,
-      "brand_id": $('.campaign-star-rating').attr('data-id')
-    }, function (response) {
-      // TODO правильная ссылка запроса + response
-      if (response.status === "success") {
-        name.val('');
-        comment.val('');
-        modalInformation("<div class='with-title'><i class='icon-Success'></i><h4>Спасибо за отзыв!</h4><p>После проверки модераторами, он будет добавлен на сайт.</p></div>", 6000);
-        _t.addClass('disabled');
-      } else {
-        modalInformation("<i class='icon-Fail'></i>Ошибка. Попробуйте позже.", 3000);
-      }
-    });
-    }
-
-    nextQuestion() {
-        const that = this;
-        const questionId = this.items[this.answers.length]?.id;
-        if (!questionId) { // если этот вопрос не существует, то скрываем все и показываем результат
-            document.querySelectorAll('.quiz-question').forEach(function (item, index) {
-                item.style.display = 'none';
-            });
-            this.showResult();
-            clearInterval(this.interval);
-            return;
-        }
-        if (!this.answers.length) {
-            document.querySelectorAll('.quiz-question').forEach(function (item, index) {
-                item.style.display = 'none';
-            });
-            if (document.querySelector(`.quiz-question[data-id="${questionId}"]`) !== null) {
-                document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
-                that.resetTimer(questionId)
-            }
-        } else {
-            document.querySelectorAll('.quiz-question').forEach(function (item, index) {
-                item.style.display = 'none';
-            });
-            if (document.querySelector(`.quiz-question[data-id="${questionId}"]`) !== null) {
-                document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
-                that.resetTimer(questionId)
             }
         }
-    }
-}
     const data = JSON.parse({!! json_encode($questions,JSON_THROW_ON_ERROR) !!});
 
 let quiz = new Quiz(data);
