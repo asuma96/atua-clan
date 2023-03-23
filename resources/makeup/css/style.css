@@ -802,12 +802,15 @@ img, video {
     display: grid;
 }
 .home-atua-logo {
-    max-width: 45%;
+    max-width: 30%;
 }
 .quiz-ul li {
     line-height: 50px;
 }
 
+.quiz-container-bottom {
+    margin-top: 1.5rem;
+}
 @media (max-width: 650px) {
     .quiz-container-bottom {
         margin-top: 1.5rem;
@@ -865,6 +868,7 @@ img, video {
     margin-bottom: 10px;
     transition: .2s;
     cursor: pointer;
+    position: relative;
 }
 .quiz-ul li:last-child {
     margin-bottom: 0;
@@ -885,6 +889,13 @@ img, video {
 .quiz-ul li.wrong {
     background: #FF1744;
     border-color: #FF1744;
+}
+
+.quiz-ul li span {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .quiz-result {
