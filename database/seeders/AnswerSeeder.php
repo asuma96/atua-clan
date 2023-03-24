@@ -244,7 +244,7 @@ class AnswerSeeder extends Seeder
             [
                 'question_id' => '11',
                 'answer' => 'RTS',
-                'right_answer' => '1',
+                'right_answer' => '0',
             ],
 
             [
@@ -307,7 +307,7 @@ class AnswerSeeder extends Seeder
             [
                 'question_id' => '14',
                 'answer' => 'THA NAMEZ',
-                'right_answer' => '1',
+                'right_answer' => '0',
             ],
 
             [
