@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
 --}}
     <meta name="msapplication-TileColor" content="#ffffff">
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
     <meta name="theme-color" content="#ffffff">
     @stack('meta-seo-settings-brand')
     <meta property="og:type" content="article">
