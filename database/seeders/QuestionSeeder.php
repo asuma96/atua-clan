@@ -52,8 +52,56 @@ class QuestionSeeder extends Seeder
                 'text' => 'twox',
             ],
             [
-                'file' => 'uncledecoy',
+                'file' => 'uncledecoy.mp4',
                 'text' => 'UNCLE DECOY',
+            ],
+            [
+                'file' => 'anubis.mp4',
+                'text' => 'Anubis',
+            ],
+            [
+                'file' => 'FUCKLOVE.mp4',
+                'text' => 'FUCK LOVE',
+            ],
+            [
+                'file' => 'jaguar.mp4',
+                'text' => 'jaguar',
+            ],
+            [
+                'file' => 'metalbirds.mp4',
+                'text' => 'metalbirds',
+            ],
+            [
+                'file' => 'NOX.mp4',
+                'text' => 'NOX',
+            ],
+            [
+                'file' => 'packonahunt.mp4',
+                'text' => 'PACK ON NA HUNT',
+            ],
+            [
+                'file' => 'playstay.mp4',
+                'text' => 'playstay',
+            ],
+            [
+                'file' => 'rts.mp4',
+                'text' => 'rts',
+            ],
+            [
+                'file' => 'ttm.mp4',
+                'text' => 'ttm',
+            ],
+            [
+                'file' => 'uglyevrythang.mp4',
+                'text' => 'uglyevrythang',
+            ],
+            [
+                'file' => 'idu.mp4',
+                'text' => 'idu',
+            ],
+            [
+                'file' => 'vrubel.mp4',
+                'text' => 'vrubel',
             ]
         ];
 
