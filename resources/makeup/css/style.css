@@ -901,3 +901,18 @@ img, video {
 .quiz-result {
     text-align: center;
 }
+.error-atua-link {
+    color: white;
+    font-size: 35px;
+    text-align: center;
+}
+.error-atua {
+    max-width: 70% !important;
+}
+.justify-center-error {
+    text-align: center !important;
+}
+.atua-img-error {
+    display: flex;
+    justify-content: center;
+}
