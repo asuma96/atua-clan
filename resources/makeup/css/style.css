@@ -916,3 +916,39 @@ img, video {
     display: flex;
     justify-content: center;
 }
+
+.quiz-footer {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.quiz-next {
+    color: #fff;
+    background: #ccc;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+.quiz-next.hidden {
+    opacity: 0;
+}
+
+.quiz-num {
+    margin-left: auto;
+}
+
+.start-screen {
+
+}
+.start-btn {
+    background-color: #f2ca8c;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: background-color .3s ease;
+}

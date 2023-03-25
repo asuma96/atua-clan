@@ -23,10 +23,25 @@
             constructor(questions) {
                 this.items = questions.data;
                 this.interval = 0;
-                this.timer = 0;
+                this.counter = 0;
                 this.answers = [];
                 this.tick = '<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 26 26" width="20px" height="20px"><path d="M 22.566406 4.730469 L 20.773438 3.511719 C 20.277344 3.175781 19.597656 3.304688 19.265625 3.796875 L 10.476563 16.757813 L 6.4375 12.71875 C 6.015625 12.296875 5.328125 12.296875 4.90625 12.71875 L 3.371094 14.253906 C 2.949219 14.675781 2.949219 15.363281 3.371094 15.789063 L 9.582031 22 C 9.929688 22.347656 10.476563 22.613281 10.96875 22.613281 C 11.460938 22.613281 11.957031 22.304688 12.277344 21.839844 L 22.855469 6.234375 C 23.191406 5.742188 23.0625 5.066406 22.566406 4.730469 Z" fill="#039d52"/></svg>';
                 this.cross = '<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 26 26" width="20px" height="20px"><path d="M 21.734375 19.640625 L 19.636719 21.734375 C 19.253906 22.121094 18.628906 22.121094 18.242188 21.734375 L 13 16.496094 L 7.761719 21.734375 C 7.375 22.121094 6.746094 22.121094 6.363281 21.734375 L 4.265625 19.640625 C 3.878906 19.253906 3.878906 18.628906 4.265625 18.242188 L 9.503906 13 L 4.265625 7.761719 C 3.882813 7.371094 3.882813 6.742188 4.265625 6.363281 L 6.363281 4.265625 C 6.746094 3.878906 7.375 3.878906 7.761719 4.265625 L 13 9.507813 L 18.242188 4.265625 C 18.628906 3.878906 19.257813 3.878906 19.636719 4.265625 L 21.734375 6.359375 C 22.121094 6.746094 22.121094 7.375 21.738281 7.761719 L 16.496094 13 L 21.734375 18.242188 C 22.121094 18.628906 22.121094 19.253906 21.734375 19.640625 Z" fill="#b61031"/></svg>';
+            }
+
+            init() {
+                const that = this;
+                const startScreen = document.createElement('div');
+                startScreen.classList.add('start-screen');
+                const button = document.createElement('button');
+                button.classList.add('start-btn');
+                button.textContent = 'Начать';
+                startScreen.appendChild(button);
+                document.querySelector('.quiz-list').appendChild(startScreen)
+                button.addEventListener('click', function () {
+                    startScreen.remove();
+                    that.createQuestions();
+                });
             }
 
             createQuestions() {
@@ -41,21 +56,43 @@
             }
 
             createQuestion(item) {
+                this.counter++;
                 const question = document.createElement('div');
                 question.classList.add('quiz-question');
                 question.setAttribute('data-id', item.id)
                 const video = this.createVideo(item.file);
                 const timer = this.createTimer();
                 const answerList = this.createAnswerList(item.answers);
+                const nextBtn = this.createNextBtn();
+                const num = this.createNum(this.counter);
                 question.appendChild(video);
-                {{--volume.addEventListener('click', function () {
-                    video.muted = !video.muted;
-                    console.log(video.muted);
-                });--}}
-                volume.click();
                 question.appendChild(timer);
                 question.appendChild(answerList);
+                const questionFooter = document.createElement('div');
+                questionFooter.classList.add('quiz-footer');
+                questionFooter.appendChild(nextBtn);
+                questionFooter.appendChild(num);
+                question.appendChild(questionFooter);
                 return question;
+            }
+
+            createNum(number) {
+                const num = document.createElement('div');
+                num.classList.add('quiz-num');
+                num.innerText = number + '/' + this.items.length;
+                return num;
+
+            }
+
+            createNextBtn() {
+                const that = this;
+                const nextBtn = document.createElement('button');
+                nextBtn.classList.add('quiz-next', 'hidden');
+                nextBtn.textContent = 'К следующему вопросу';
+                nextBtn.addEventListener('click', function () {
+                    that.nextQuestion();
+                });
+                return nextBtn;
             }
 
             resetTimer(id) {
@@ -87,9 +124,7 @@
                                 }
                             }
                         }
-                        setTimeout(function () {
-                            that.nextQuestion();
-                        }, 3000);
+                        document.querySelector(`.quiz-question[data-id="${id}"] .quiz-next`).classList.remove('hidden');
                     }
                     timerLine.style.width = timerCount + '%';
                     timerTime.textContent = '0:' + (timeLeftString.length > 1 ? timeLeftString: '0' + timeLeftString);
@@ -187,9 +222,7 @@
                             }
                         }
                         clearInterval(that.interval);
-                        setTimeout(function () {
-                            that.nextQuestion();
-                        }, 3000);
+                        document.querySelector(`.quiz-question[data-id="${questionId}"] .quiz-next`).classList.remove('hidden');
                     }
                 });
             }
@@ -197,7 +230,7 @@
             showResult() {
                 const result = document.createElement('div');
                 result.classList.add('quiz-result');
-                result.innerText = `Вы ответили правильно на ${this.answers.filter(function (item) {return item}).length}/${this.items.length} вопросов`;
+                result.innerText = `Вы ответили правильно на ${this.answers.filter(function (item) {return item.correct}).length}/${this.items.length} вопросов`;
                 document.querySelector('.quiz-list').appendChild(result);
                 console.log(this.answers);
                 $.post("/question/getPercent/23", {
@@ -219,6 +252,9 @@
             nextQuestion() {
                 const that = this;
                 const questionId = this.items[this.answers.length]?.id;
+                document.querySelectorAll('.quiz-video').forEach(function (item, index) {
+                    item.muted = true;
+                });
                 if (!questionId) { // если этот вопрос не существует, то скрываем все и показываем результат
                     document.querySelectorAll('.quiz-question').forEach(function (item, index) {
                         item.style.display = 'none';
@@ -227,15 +263,18 @@
                     clearInterval(this.interval);
                     return;
                 }
-                document.querySelectorAll('.quiz-video').forEach(function (item, index) {
-                    item.muted = true;
-                });
+                if (this.answers.length === this.items.length - 1) {
+                    document.querySelector(`.quiz-question[data-id="${questionId}"] .quiz-next`).textContent = 'Завершить опрос';
+                }
                 if (!this.answers.length) {
                     document.querySelectorAll('.quiz-question').forEach(function (item, index) {
                         item.style.display = 'none';
                     });
                     if (document.querySelector(`.quiz-question[data-id="${questionId}"]`) !== null) {
                         document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
+                        setTimeout(function () {
+                            document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
+                        }, 0);
                         that.resetTimer(questionId);
                     }
                 } else {
@@ -244,6 +283,9 @@
                     });
                     if (document.querySelector(`.quiz-question[data-id="${questionId}"]`) !== null) {
                         document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
+                        setTimeout(function () {
+                            document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
+                        }, 0);
                         that.resetTimer(questionId);
                     }
                 }
