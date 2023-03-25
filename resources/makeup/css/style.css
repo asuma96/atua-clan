@@ -952,3 +952,6 @@ img, video {
     letter-spacing: 2px;
     transition: background-color .3s ease;
 }
+.qr-quiz-img {
+    margin: 20px auto 10px;
+}

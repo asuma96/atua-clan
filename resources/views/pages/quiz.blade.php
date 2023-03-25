@@ -18,7 +18,6 @@
         </div>
     </div>
     <script>
-
         class Quiz {
             constructor(questions) {
                 this.items = questions.data;
@@ -228,24 +227,18 @@
             }
 
             showResult() {
+                const that = this;
                 const result = document.createElement('div');
                 result.classList.add('quiz-result');
-                result.innerText = `Вы ответили правильно на ${this.answers.filter(function (item) {return item.correct}).length}/${this.items.length} вопросов`;
                 document.querySelector('.quiz-list').appendChild(result);
-                console.log(this.answers);
-                $.post("/question/getPercent/23", {
+                $.post("/question/getPercent/{{$user['id']}}", {
                     "answers": that.answers,
-                    "brand_id": $('.campaign-star-rating').attr('data-id')
                 }, function (response) {
                     // TODO правильная ссылка запроса + response
-                    if (response.status === "success") {
-                        name.val('');
-                        comment.val('');
-                        modalInformation("<div class='with-title'><i class='icon-Success'></i><h4>Спасибо за отзыв!</h4><p>После проверки модераторами, он будет добавлен на сайт.</p></div>", 6000);
-                        _t.addClass('disabled');
-                    } else {
-                        modalInformation("<i class='icon-Fail'></i>Ошибка. Попробуйте позже.", 3000);
-                    }
+                                    result.innerHTML = `Вы ответили правильно на ${response.percent} % вопросов`;
+                                    if(response.percent >= 70){
+                                     result.innerHTML += `<img src="/img/qrcode.png" class="home-atua-logo qr-quiz-img">`;
+                                    }
                 });
             }
 
@@ -274,7 +267,7 @@
                         document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
                         setTimeout(function () {
                             document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
-                        }, 0);
+                        }, 100);
                         that.resetTimer(questionId);
                     }
                 } else {
@@ -285,7 +278,7 @@
                         document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
                         setTimeout(function () {
                             document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
-                        }, 0);
+                        }, 100);
                         that.resetTimer(questionId);
                     }
                 }
@@ -294,7 +287,7 @@
     const data = JSON.parse({!! json_encode($questions,JSON_THROW_ON_ERROR) !!});
 
 let quiz = new Quiz(data);
-quiz.createQuestions();
+quiz.init();
 
 document.addEventListener('click', function (e) {
     if (e.target.closest('.quiz-ul')) {
