@@ -123,23 +123,23 @@ class AnswerSeeder extends Seeder
 
             [
                 'question_id' => '6',
-                'answer' => 'TTM',
-                'right_answer' => '0',
-            ],
-            [
-                'question_id' => '6',
-                'answer' => 'QUALITY',
-                'right_answer' => '0',
-            ],
-            [
-                'question_id' => '6',
-                'answer' => 'ITAMI',
-                'right_answer' => '0',
-            ],
-            [
-                'question_id' => '6',
-                'answer' => 'ROOKIE',
+                'answer' => 'VRUBEL',
                 'right_answer' => '1',
+            ],
+            [
+                'question_id' => '6',
+                'answer' => 'OOLONG',
+                'right_answer' => '0',
+            ],
+            [
+                'question_id' => '6',
+                'answer' => 'ENERGY',
+                'right_answer' => '0',
+            ],
+            [
+                'question_id' => '6',
+                'answer' => 'I GET DOWN',
+                'right_answer' => '0',
             ],
 
             [
@@ -454,27 +454,6 @@ class AnswerSeeder extends Seeder
             [
                 'question_id' => '21',
                 'answer' => 'ХУДОЖНИКУ ТРУДНО',
-                'right_answer' => '0',
-            ],
-
-            [
-                'question_id' => '22',
-                'answer' => 'VRUBEL',
-                'right_answer' => '1',
-            ],
-            [
-                'question_id' => '22',
-                'answer' => 'OOLONG',
-                'right_answer' => '0',
-            ],
-            [
-                'question_id' => '22',
-                'answer' => 'ENERGY',
-                'right_answer' => '0',
-            ],
-            [
-                'question_id' => '22',
-                'answer' => 'I GET DOWN',
                 'right_answer' => '0',
             ],
         ];

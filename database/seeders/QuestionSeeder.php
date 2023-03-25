@@ -35,10 +35,8 @@ class QuestionSeeder extends Seeder
                 'file' => 'poke.mp4',
                 'text' => 'Poke',
             ],
-            [
-                'file' => 'rookie.mp4',
-                'text' => 'rookie',
-            ],
+
+
             [
                 'file' => 'senju360.mp4',
                 'text' => 'senju',

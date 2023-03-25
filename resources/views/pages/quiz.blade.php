@@ -267,7 +267,7 @@
                         document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
                         setTimeout(function () {
                             document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
-                        }, 100);
+                        }, 10);
                         that.resetTimer(questionId);
                     }
                 } else {
@@ -278,7 +278,7 @@
                         document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
                         setTimeout(function () {
                             document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
-                        }, 100);
+                        }, 10);
                         that.resetTimer(questionId);
                     }
                 }
