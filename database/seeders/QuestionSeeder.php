@@ -18,56 +18,70 @@ class QuestionSeeder extends Seeder
                 'file' => 'hatin360h.mp4',
                 'text' => 'Akimato hatin',
             ],
+
             [
                 'file' => 'mirrortalk1.mp4',
                 'text' => 'Mirror talk',
             ],
+
             [
                 'file' => 'nevagohard.mp4',
                 'text' => 'I neva go hard',
             ],
 
+
             [
                 'file' => 'oolong.mp4',
                 'text' => 'O loong',
             ],
+
             [
                 'file' => 'poke.mp4',
                 'text' => 'Poke',
             ],
 
+            [
+                'file' => 'vrubel.mp4',
+                'text' => 'vrubel',
+            ],
 
             [
                 'file' => 'senju360.mp4',
                 'text' => 'senju',
             ],
+
             [
                 'file' => 'thundawind.mp4',
                 'text' => 'Thundavind',
             ],
+
             [
                 'file' => 'twox.mp4',
                 'text' => 'twox',
             ],
+
             [
                 'file' => 'uncledecoy.mp4',
                 'text' => 'UNCLE DECOY',
             ],
+
             [
                 'file' => 'anubis.mp4',
                 'text' => 'Anubis',
             ],
+
             [
                 'file' => 'FUCKLOVE.mp4',
                 'text' => 'FUCK LOVE',
             ],
+
             [
                 'file' => 'jaguar.mp4',
                 'text' => 'jaguar',
             ],
             [
-                'file' => 'metalbirds.mp4',
-                'text' => 'metalbirds',
+                'file' => 'idu.mp4',
+                'text' => 'idu',
             ],
             [
                 'file' => 'NOX.mp4',
@@ -94,12 +108,20 @@ class QuestionSeeder extends Seeder
                 'text' => 'uglyevrythang',
             ],
             [
-                'file' => 'idu.mp4',
-                'text' => 'idu',
+                'file' => 'voskhod.mp4',
+                'text' => 'voskhod',
             ],
             [
-                'file' => 'vrubel.mp4',
-                'text' => 'vrubel',
+                'file' => 'vys.mp4',
+                'text' => 'Высь',
+            ],
+            [
+                'file' => 'son.mp4',
+                'text' => 'Сон',
+            ],
+            [
+                'file' => 'yav.mp4',
+                'text' => 'Явь',
             ]
         ];
 

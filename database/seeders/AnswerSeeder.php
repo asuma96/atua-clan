@@ -23,17 +23,17 @@ class AnswerSeeder extends Seeder
             ],
             [
                 'question_id' => '1',
-                'answer' => 'Impulse',
+                'answer' => 'IMPULSE',
                 'right_answer' => '0',
             ],
             [
                 'question_id' => '1',
-                'answer' => 'Sparks',
+                'answer' => 'SPARKS',
                 'right_answer' => '0',
             ],
             [
                 'question_id' => '1',
-                'answer' => 'Superpowers',
+                'answer' => 'SUPERPOWERS',
                 'right_answer' => '0',
             ],
 
@@ -291,22 +291,22 @@ class AnswerSeeder extends Seeder
 
             [
                 'question_id' => '14',
-                'answer' => 'METAL BIRDS',
+                'answer' => 'IDU',
                 'right_answer' => '1',
             ],
             [
                 'question_id' => '14',
-                'answer' => 'IMPULSE',
+                'answer' => 'RUSSIAN',
                 'right_answer' => '0',
             ],
             [
                 'question_id' => '14',
-                'answer' => 'HATIN',
+                'answer' => 'NO LETTERS',
                 'right_answer' => '0',
             ],
             [
                 'question_id' => '14',
-                'answer' => 'THA NAMEZ',
+                'answer' => 'ХУДОЖНИКУ ТРУДНО',
                 'right_answer' => '0',
             ],
 
@@ -438,24 +438,88 @@ class AnswerSeeder extends Seeder
 
             [
                 'question_id' => '21',
-                'answer' => 'IDU',
+                'answer' => 'ВЫСЬ',
+                'right_answer' => '0',
+            ],
+            [
+                'question_id' => '21',
+                'answer' => 'VOSKHOD',
                 'right_answer' => '1',
             ],
             [
                 'question_id' => '21',
-                'answer' => 'RUSSIAN',
+                'answer' => 'ЯВЬ',
                 'right_answer' => '0',
             ],
             [
                 'question_id' => '21',
-                'answer' => 'NO LETTERS',
+                'answer' => 'БЕЗВОЛЬЕ',
+                'right_answer' => '0',
+            ],
+
+            [
+                'question_id' => '22',
+                'answer' => 'ВЫСЬ',
+                'right_answer' => '1',
+            ],
+            [
+                'question_id' => '22',
+                'answer' => 'ЯВЬ',
                 'right_answer' => '0',
             ],
             [
-                'question_id' => '21',
-                'answer' => 'ХУДОЖНИКУ ТРУДНО',
+                'question_id' => '22',
+                'answer' => 'ВОСХОД',
                 'right_answer' => '0',
             ],
+            [
+                'question_id' => '22',
+                'answer' => 'ХРАМ',
+                'right_answer' => '0',
+            ],
+
+            [
+                'question_id' => '23',
+                'answer' => 'БЕЗВОЛЬЕ',
+                'right_answer' => '0',
+            ],
+            [
+                'question_id' => '23',
+                'answer' => 'ВЫСЬ',
+                'right_answer' => '0',
+            ],
+            [
+                'question_id' => '23',
+                'answer' => 'ХРАМ',
+                'right_answer' => '0',
+            ],
+            [
+                'question_id' => '23',
+                'answer' => 'СОН',
+                'right_answer' => '1',
+            ],
+
+            [
+                'question_id' => '24',
+                'answer' => 'MICROPHONE',
+                'right_answer' => '0',
+            ],
+            [
+                'question_id' => '24',
+                'answer' => 'БЕЗВОЛЬЕ',
+                'right_answer' => '0',
+            ],
+            [
+                'question_id' => '24',
+                'answer' => 'СОН',
+                'right_answer' => '0',
+            ],
+            [
+                'question_id' => '24',
+                'answer' => 'ЯВЬ',
+                'right_answer' => '1',
+            ],
+
         ];
 
         foreach ($answers as $answer) {
