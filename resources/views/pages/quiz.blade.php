@@ -31,10 +31,12 @@
             init() {
                 const that = this;
                 const startScreen = document.createElement('div');
+                startScreen.classList.add('flex');
                 startScreen.classList.add('start-screen');
+                startScreen.classList.add('justify-center');
                 const button = document.createElement('button');
                 button.classList.add('start-btn');
-                button.textContent = 'Начать';
+                button.textContent = 'ENTER THE GATES';
                 startScreen.appendChild(button);
                 document.querySelector('.quiz-list').appendChild(startScreen)
                 button.addEventListener('click', function () {
