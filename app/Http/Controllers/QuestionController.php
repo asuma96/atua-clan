@@ -67,7 +67,6 @@ class QuestionController extends \App\Http\Controllers\Controller
         foreach ($answers as $answer) {
             $i += $answer === "true" ? 1 : 0;
         }
-
         $percent = $i / 11 * 100;
 
         $user = User::query()->findOrFail($userId);
