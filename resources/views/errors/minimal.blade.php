@@ -19,7 +19,7 @@
         class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
         <div class="quiz-container mx-auto p-6 lg:p-8 quiz-content">
             <div>
-                <a href="/" class="atua-img-error"><img src="/img/atua-logo-white.svg" class="svg-icon home-atua-logo error-atua"></a>
+                <a href="/" class="atua-img-error"><img src="/img/atua-gates.svg" class="svg-icon home-atua-logo error-atua"></a>
             </div>
             <div class="justify-center justify-center-error">
                 <a href="/" class="error-atua-link">TAP HERE AND GO TO START PAGE!!!</a>

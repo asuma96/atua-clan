@@ -70,7 +70,7 @@ class QuestionController extends \App\Http\Controllers\Controller
         $percent = $i / 11 * 100;
 
         $user = User::query()->findOrFail($userId);
-        $user->percent = $percent;
+        $user->percent = round($percent);
         $user->qr = true;
         $user->save();
 

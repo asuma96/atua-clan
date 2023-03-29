@@ -4,7 +4,7 @@
         class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
         <div class="quiz-container mx-auto p-6 lg:p-8 quiz-content">
             <div class="flex justify-center">
-                <img src="/img/atua-logo-white.svg" class="svg-icon home-atua-logo">
+                <img src="/img/atua-gates.svg" class="svg-icon home-atua-logo">
             </div>
             <div class="mt-16">
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-6 lg:gap-8">
