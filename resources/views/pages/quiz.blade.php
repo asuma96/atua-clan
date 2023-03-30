@@ -7,8 +7,6 @@
                 <img src="/img/atua-gates.svg" class="svg-icon home-atua-logo">
             </div>
             <div class="mt-16 quiz-container-bottom">
-                <button id="volume">Звук</button>
-
                 <div class="grid grid-cols-1 md:grid-cols-1 gap-6 lg:gap-8">
                     <span
                         class="quiz-list scale-100 p-6 bg-white dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
@@ -21,6 +19,13 @@
         class Quiz {
             constructor(questions) {
                 this.items = questions.data;
+                const lastQuestion = {
+                    "id": this.items.length + 1,
+                    "text": "Как правильно пишется название клана?",
+                    "type": "text",
+                    "answer": "atua-clan",
+                };
+                this.items.push(lastQuestion);
                 this.interval = 0;
                 this.counter = 0;
                 this.answers = [];
@@ -40,6 +45,7 @@
                 startScreen.appendChild(button);
                 document.querySelector('.quiz-list').appendChild(startScreen)
                 button.addEventListener('click', function () {
+                    document.querySelector('.quiz-container').classList.add('start');
                     startScreen.remove();
                     that.createQuestions();
                 });
@@ -61,14 +67,29 @@
                 const question = document.createElement('div');
                 question.classList.add('quiz-question');
                 question.setAttribute('data-id', item.id)
-                const video = this.createVideo(item.file);
                 const timer = this.createTimer();
-                const answerList = this.createAnswerList(item.answers);
-                const nextBtn = this.createNextBtn();
+                let nextBtn;
+                if (item.answers) {
+                    nextBtn = this.createNextBtn();
+                } else if (item.answer) {
+                    nextBtn = this.createNextBtn(true);
+                }
                 const num = this.createNum(this.counter);
-                question.appendChild(video);
+                if (item.file) {
+                    const video = this.createVideo(item.file);
+                    question.appendChild(video);
+                } else if (item.text) {
+                    const text = this.createText(item.text);
+                    question.appendChild(text);
+                }
                 question.appendChild(timer);
-                question.appendChild(answerList);
+                if (item.answers) {
+                    const answerList = this.createAnswerList(item.answers);
+                    question.appendChild(answerList);
+                } else if (item.answer) {
+                    const textField = this.createTextField();
+                    question.appendChild(textField);
+                }
                 const questionFooter = document.createElement('div');
                 questionFooter.classList.add('quiz-footer');
                 questionFooter.appendChild(nextBtn);
@@ -85,14 +106,38 @@
 
             }
 
-            createNextBtn() {
+            createText(text) {
+                const textEl = document.createElement('div');
+                textEl.classList.add('quiz-text');
+                textEl.innerText = text;
+                return textEl;
+            }
+
+            createTextField() {
+                const textFieldWrapper = document.createElement('div');
+                textFieldWrapper.classList.add('quiz-text-field-wrapper');
+                const textField = document.createElement('input');
+                textField.classList.add('quiz-text-field');
+                textFieldWrapper.appendChild(textField);
+                return textFieldWrapper;
+            }
+
+            createNextBtn(textField = false) {
                 const that = this;
                 const nextBtn = document.createElement('button');
-                nextBtn.classList.add('quiz-next', 'hidden');
-                nextBtn.textContent = 'К следующему вопросу';
-                nextBtn.addEventListener('click', function () {
-                    that.nextQuestion();
-                });
+                if (textField) {
+                    nextBtn.textContent = 'Проверить';
+                    nextBtn.classList.add('quiz-next', 'last');
+                    nextBtn.addEventListener('click', function (e) {
+                        that.checkAnswer(e.target.closest('.quiz-question').getAttribute('data-id'), 0, document.querySelector('.quiz-text-field'));
+                    });
+                } else {
+                    nextBtn.classList.add('quiz-next', 'hidden');
+                    nextBtn.textContent = 'К следующему вопросу';
+                    nextBtn.addEventListener('click', function () {
+                        that.nextQuestion();
+                    });
+                }
                 return nextBtn;
             }
 
@@ -186,46 +231,71 @@
                 return answer;
             }
 
-            checkAnswer(questionId, answerId) {
+            checkAnswer(questionId = 0, answerId = 0, textField = '') {
                 const that = this;
                 let correct = false;
                 let correctAnswer = 0;
-                this.items.forEach(function (item, index) {
-                    if (item.id == questionId) {
-                        let answers = [];
-                        for (let i in item.answers) {
-                            answers.push(item.answers[i]);
+                if (questionId && textField) {
+                    this.items.forEach(function (item, index) {
+                        if (item.id == questionId && item.answer.toLowerCase() == textField.value.toLowerCase()) {
+                            correct = true;
                         }
-                        answers.forEach(function (answer, id) {
-                            if (answer.id == answerId && answer.right_answer) {
-                                correct = true;
-                            } else if (answer.right_answer) {
-                                correctAnswer = answer.id;
-                            }
-                        });
-                        that.answers.push(correct);
-                        if (!document.querySelectorAll(`.quiz-ul li[data-question-id="${questionId}"].checked`).length) {
-                            if (correct) {
-                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).classList.add('correct', 'checked');
-                                const tick = document.createElement('span');
-                                tick.innerHTML = that.tick;
-                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).appendChild(tick);
-                            } else {
-                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).classList.add('wrong', 'checked');
-                                const cross = document.createElement('span');
-                                cross.innerHTML = that.cross;
-                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).appendChild(cross);
-                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${correctAnswer}"]`).classList.add('correct', 'checked');
-
-                                const tick = document.createElement('span');
-                                tick.innerHTML = that.tick;
-                                document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${correctAnswer}"]`).appendChild(tick);
-                            }
-                        }
-                        clearInterval(that.interval);
-                        document.querySelector(`.quiz-question[data-id="${questionId}"] .quiz-next`).classList.remove('hidden');
+                    });
+                    const resultIcon = document.createElement('span')
+                    if (correct) {
+                        resultIcon.innerHTML = that.tick;
+                        textField.classList.add('correct');
+                    } else {
+                        resultIcon.innerHTML = that.cross;
+                        textField.classList.add('wrong');
                     }
-                });
+                    textField.classList.add('checked');
+                    textField.parentElement.appendChild(resultIcon);
+                    that.answers.push(correct);
+                    clearInterval(that.interval);
+                    setTimeout(function () {
+                        that.nextQuestion();
+                    }, 3000);
+                    return;
+                }
+                if (questionId && answerId) {
+                    this.items.forEach(function (item, index) {
+                        if (item.id == questionId) {
+                            let answers = [];
+                            for (let i in item.answers) {
+                                answers.push(item.answers[i]);
+                            }
+                            answers.forEach(function (answer, id) {
+                                if (answer.id == answerId && answer.right_answer) {
+                                    correct = true;
+                                } else if (answer.right_answer) {
+                                    correctAnswer = answer.id;
+                                }
+                            });
+                            that.answers.push(correct);
+                            if (!document.querySelectorAll(`.quiz-ul li[data-question-id="${questionId}"].checked`).length) {
+                                if (correct) {
+                                    document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).classList.add('correct', 'checked');
+                                    const tick = document.createElement('span');
+                                    tick.innerHTML = that.tick;
+                                    document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).appendChild(tick);
+                                } else {
+                                    document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).classList.add('wrong', 'checked');
+                                    const cross = document.createElement('span');
+                                    cross.innerHTML = that.cross;
+                                    document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${answerId}"]`).appendChild(cross);
+                                    document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${correctAnswer}"]`).classList.add('correct', 'checked');
+
+                                    const tick = document.createElement('span');
+                                    tick.innerHTML = that.tick;
+                                    document.querySelector(`.quiz-ul li[data-question-id="${questionId}"][data-id="${correctAnswer}"]`).appendChild(tick);
+                                }
+                            }
+                            clearInterval(that.interval);
+                            document.querySelector(`.quiz-question[data-id="${questionId}"] .quiz-next`).classList.remove('hidden');
+                        }
+                    });
+                }
             }
 
             showResult() {
@@ -237,10 +307,11 @@
                     "answers": that.answers,
                 }, function (response) {
                     // TODO правильная ссылка запроса + response
-                                    result.innerHTML = `Вы ответили правильно на ${response.percent} % вопросов`;
-                                    if(response.percent >= 70){
-                                     result.innerHTML += `<img src="/img/qrcode.png" class="home-atua-logo qr-quiz-img">`;
-                                    }
+                    result.innerHTML = `<span class="quiz-result-top"><img src="/img/atua-gates.svg" alt=""></span><span class="quiz-result-bottom"><img src="/img/qrcode.png" class="home-atua-logo qr-quiz-img">
+                    <span class="quiz-result-bottom-total"><span class="quiz-result-bottom-total-value">10/11</span><span class="quiz-result-bottom-total-promo"></span></span></span>`;
+                    if(response.percent >= 70){
+                        result.querySelector('.quiz-result-bottom-total-promo').innerText = 'Promocode';
+                    }
                 });
             }
 
@@ -258,18 +329,17 @@
                     clearInterval(this.interval);
                     return;
                 }
-                if (this.answers.length === this.items.length - 1) {
-                    document.querySelector(`.quiz-question[data-id="${questionId}"] .quiz-next`).textContent = 'Завершить опрос';
-                }
                 if (!this.answers.length) {
                     document.querySelectorAll('.quiz-question').forEach(function (item, index) {
                         item.style.display = 'none';
                     });
                     if (document.querySelector(`.quiz-question[data-id="${questionId}"]`) !== null) {
                         document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
-                        setTimeout(function () {
-                            document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
-                        }, 10);
+                        if (document.querySelector(`.quiz-question[data-id="${questionId}"] video`)) {
+                            setTimeout(function () {
+                                document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
+                            }, 10);
+                        }
                         that.resetTimer(questionId);
                     }
                 } else {
@@ -278,9 +348,11 @@
                     });
                     if (document.querySelector(`.quiz-question[data-id="${questionId}"]`) !== null) {
                         document.querySelector(`.quiz-question[data-id="${questionId}"]`).style.display = 'block';
-                        setTimeout(function () {
-                            document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
-                        }, 10);
+                        if (document.querySelector(`.quiz-question[data-id="${questionId}"] video`)) {
+                            setTimeout(function () {
+                                document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
+                            }, 10);
+                        }
                         that.resetTimer(questionId);
                     }
                 }
