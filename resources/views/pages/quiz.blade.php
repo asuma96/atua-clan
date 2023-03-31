@@ -23,7 +23,7 @@
                     "id": this.items.length + 1,
                     "text": "Как правильно пишется название клана?",
                     "type": "text",
-                    "answer": "atua-clan",
+                    "answer": "atua clan",
                 };
                 this.items.push(lastQuestion);
                 this.interval = 0;
@@ -307,10 +307,10 @@
                     "answers": that.answers,
                 }, function (response) {
                     // TODO правильная ссылка запроса + response
-                    result.innerHTML = `<span class="quiz-result-top"><img src="/img/atua-gates.svg" alt=""></span><span class="quiz-result-bottom"><img src="/img/qrcode.png" class="home-atua-logo qr-quiz-img">
+                    result.innerHTML = `<span class="quiz-result-top"><a href="https://atua-clan.timepad.ru/event/2374529/"><img src="/img/poster_final.jpg" alt=""></span><span class="quiz-result-bottom"></a><img src="/img/qrcode.png" class="qr-quiz-img">
                     <span class="quiz-result-bottom-total"><span class="quiz-result-bottom-total-value">10/11</span><span class="quiz-result-bottom-total-promo"></span></span></span>`;
                     if(response.percent >= 70){
-                        result.querySelector('.quiz-result-bottom-total-promo').innerText = 'Promocode';
+                        result.querySelector('.quiz-result-bottom-total-promo').innerText = 'ПРОМОКОД: RENEGADE';
                     }
                 });
             }
