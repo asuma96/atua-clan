@@ -762,12 +762,23 @@ img, video {
 }
 .quiz-text {
     text-align: center;
+    font-size: 22px;
+    margin-top: 0px;
+    padding-bottom: 15px;
+}
+@media (max-width: 650px) {
+    .quiz-text {
+        font-size: 20px;
+    }
 }
 .quiz-content {
     padding: 60px;
 }
 .quiz-container {
     max-width: 40rem;
+}
+.quiz-container.start {
+    width: 100%;
 }
 .user-input {
     margin-top: 20px;
@@ -782,7 +793,7 @@ img, video {
 }
 .register-btn {
     margin-top: 20px;
-    background-color: #f2ca8c;         /* цвет фона кнопки */
+    background-color: #ed6f10;         /* цвет фона кнопки */
     color: #333333;                    /* цвет текста на кнопке */
     border: none;                      /* убираем границы */
     border-radius: 5px;                /* скругляем углы */
@@ -802,7 +813,7 @@ img, video {
     display: grid;
 }
 .home-atua-logo {
-    max-width: 40%;
+    max-width: 150px;
 }
 .quiz-ul li {
     line-height: 50px;
@@ -941,7 +952,7 @@ img, video {
 
 }
 .start-btn {
-    background-color: #f2ca8c;
+    background-color: #ed6f10;
     color: #333;
     border: none;
     border-radius: 5px;
@@ -953,5 +964,80 @@ img, video {
     transition: background-color .3s ease;
 }
 .qr-quiz-img {
-    margin: 20px auto 10px;
+    max-width: 92px;
+    margin-right: 30px;
+    margin-top: 10px;
+}
+
+.quiz-result-top {
+    margin-bottom: 10px;
+}
+
+.quiz-result-bottom {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 15px;
+    text-align: left;
+
+}
+
+.quiz-result-bottom-total {
+    line-height: 1.5;
+    margin-left: 0px;
+}
+
+.quiz-result-bottom-total-value {
+    display: block;
+    font-size: 46px;
+    margin-bottom: -8px;
+}
+
+.quiz-result-bottom-total-promo {
+    font-size: 22px;
+}
+
+@media (max-width: 650px) {
+    .quiz-result-bottom-total-value,
+    .quiz-result-bottom-total-promo {
+        font-size: 20px;
+    }
+}
+
+.quiz-text-field-wrapper {
+    position: relative;
+}
+
+.quiz-text-field-wrapper span {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.quiz-text-field {
+    padding: 10px 12px;
+    line-height: 1.5;
+    border: 1px solid #ccc;
+    width: 100%;
+    border-radius: 5px;
+    outline: none;
+}
+.quiz-text-field.checked {
+    color: #fff;
+}
+.quiz-text-field.correct {
+    background: #00E676;
+    border-color: #00E676;
+}
+.quiz-text-field.wrong {
+    background: #FF1744;
+    border-color: #FF1744;
+}
+.home-atua-logo-home {
+    max-width: 200px;
+}
+.user-description {
+    text-align: justify;
+    font-size: 15px;
+    margin-top: 0px;
 }
