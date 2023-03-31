@@ -970,6 +970,7 @@ img, video {
 }
 
 .quiz-result-top {
+    display: block;
     margin-bottom: 10px;
 }
 
@@ -1040,4 +1041,12 @@ img, video {
     text-align: justify;
     font-size: 15px;
     margin-top: 0px;
+}
+
+.quiz-container.finish .quiz-container-bottom {
+    margin-top: 0;
+}
+
+.quiz-container.finish .home-atua-logo {
+    display: none;
 }
