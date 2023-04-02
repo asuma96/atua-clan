@@ -29,7 +29,7 @@
                     "id": lastId + 1,
                     "text": "Как правильно пишется название клана?",
                     "type": "text",
-                    "answer": "atua-clan",
+                    "answer": "atua clan",
                 };
                 this.items.push(lastQuestion);
                 this.interval = 0;

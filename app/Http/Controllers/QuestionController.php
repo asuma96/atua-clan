@@ -30,6 +30,7 @@ class QuestionController extends \App\Http\Controllers\Controller
 
         $questions = Question::query()->with('answers')->inRandomOrder()->limit(10)->paginate(10);
         $resource = $this->prepareQuestionToResponse($questions);
+
         return view('pages.quiz', [
             'questions' => $resource->toJson(),
             'user' => [
