@@ -19,8 +19,14 @@
         class Quiz {
             constructor(questions) {
                 this.items = questions.data;
+                let lastId = 0;
+                this.items.forEach(function (item) {
+                    if (item.id > lastId) {
+                        lastId = item.id;
+                    }
+                });
                 const lastQuestion = {
-                    "id": this.items.length + 1,
+                    "id": lastId + 1,
                     "text": "Как правильно пишется название клана?",
                     "type": "text",
                     "answer": "atua clan",
@@ -38,7 +44,20 @@
                 const startScreen = document.createElement('div');
                 startScreen.classList.add('flex');
                 startScreen.classList.add('start-screen');
-                startScreen.classList.add('justify-center');
+                startScreen.classList.add('grid');
+                startScreen.classList.add('grid-cols-1');
+                startScreen.classList.add('md:grid-cols-1');
+                startScreen.classList.add('gap-6');
+                startScreen.classList.add('lg:gap-8');
+                startScreen.innerHTML = `<div class="user-block-text">
+                <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white quiz-text">ПРАВИЛА!</h2>
+                <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed user-description">
+                                Вам будут показываться ролики с треками участников ATUA CLAN. В течение 15 секунд нужно угадать название трека. На выбор будет 4 варианта ответов, правильный только 1.
+
+В 11 вопросе нужно будет самостоятельно ввести правильный ответ.
+
+Чтобы получить промокод на скидку, нужно набрать более 70% правильных ответов.
+                            </p></div>`;
                 const button = document.createElement('button');
                 button.classList.add('start-btn');
                 button.textContent = 'ENTER THE GATES';
@@ -307,8 +326,9 @@
                     "answers": that.answers,
                 }, function (response) {
                     // TODO правильная ссылка запроса + response
-                    result.innerHTML = `<span class="quiz-result-top"><a href="https://atua-clan.timepad.ru/event/2374529/"><img src="/img/poster_final.jpg" alt=""></span><span class="quiz-result-bottom"></a><img src="/img/qrcode.png" class="qr-quiz-img">
-                    <span class="quiz-result-bottom-total"><span class="quiz-result-bottom-total-value">10/11</span><span class="quiz-result-bottom-total-promo"></span></span></span>`;
+                    document.querySelector('.home-atua-logo').style.display = 'none';
+                    result.innerHTML = `<span class="quiz-result-top"><a href="https://atua-clan.timepad.ru/event/2374529/"><img src="/img/poster_final.jpg" alt=""></a></span><span class="quiz-result-bottom"><img src="/img/qrcode.png" class="qr-quiz-img">
+                    <span class="quiz-result-bottom-total"><span class="quiz-result-bottom-total-value">${Math.ceil(response.percent*that.items.length/100)}/${that.items.length}</span><span class="quiz-result-bottom-total-promo"></span></span></span>`;
                     if(response.percent >= 70){
                         result.querySelector('.quiz-result-bottom-total-promo').innerText = 'ПРОМОКОД: RENEGADE';
                     }
@@ -338,7 +358,7 @@
                         if (document.querySelector(`.quiz-question[data-id="${questionId}"] video`)) {
                             setTimeout(function () {
                                 document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
-                            }, 10);
+                            }, 100);
                         }
                         that.resetTimer(questionId);
                     }
@@ -351,7 +371,7 @@
                         if (document.querySelector(`.quiz-question[data-id="${questionId}"] video`)) {
                             setTimeout(function () {
                                 document.querySelector(`.quiz-question[data-id="${questionId}"] video`).muted = false;
-                            }, 10);
+                            }, 100);
                         }
                         that.resetTimer(questionId);
                     }

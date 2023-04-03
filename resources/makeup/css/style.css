@@ -970,6 +970,7 @@ img, video {
 }
 
 .quiz-result-top {
+    display: block;
     margin-bottom: 10px;
 }
 
@@ -997,9 +998,12 @@ img, video {
 }
 
 @media (max-width: 650px) {
-    .quiz-result-bottom-total-value,
-    .quiz-result-bottom-total-promo {
-        font-size: 20px;
+    .quiz-result-bottom-total-value{
+        font-size: 24px;
+        margin-bottom: 5px!important;
+    }
+    .quiz-result-bottom-total-promo{
+        font-size: 16px;
     }
 }
 
@@ -1040,4 +1044,12 @@ img, video {
     text-align: justify;
     font-size: 15px;
     margin-top: 0px;
+}
+
+.quiz-container.finish .quiz-container-bottom {
+    margin-top: 0;
+}
+
+.quiz-container.finish .home-atua-logo {
+    display: none;
 }
