@@ -998,9 +998,12 @@ img, video {
 }
 
 @media (max-width: 650px) {
-    .quiz-result-bottom-total-value,
-    .quiz-result-bottom-total-promo {
-        font-size: 20px;
+    .quiz-result-bottom-total-value{
+        font-size: 24px;
+        margin-bottom: 5px!important;
+    }
+    .quiz-result-bottom-total-promo{
+        font-size: 16px;
     }
 }
 
